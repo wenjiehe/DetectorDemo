@@ -8,6 +8,13 @@
 #import "ViewController.h"
 #import <CoreImage/CIDetector.h>
 
+typedef NS_ENUM(NSUInteger, faceType) {
+    faceTypeLeftEye,
+    faceTypeRightEye,
+    faceTypeMouth,
+    faceTypeFace,
+};
+
 @interface ViewController ()
 
 @end
@@ -22,7 +29,8 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 //    [self analysisQRCode];
-    [self analysisText];
+//    [self analysisText];
+    [self analysisFace];
 }
 
 /**
@@ -124,17 +132,110 @@
     NSDictionary *param = [NSDictionary dictionaryWithObject:CIDetectorTypeFace forKey:CIDetectorAccuracyHigh];
     //创建识别器对象
     CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:param];
-    UIImage *image = [UIImage imageNamed:@"text"];
+    UIImage *image = [UIImage imageNamed:@"liuyifei.jpeg"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = CGRectMake(20, 10, [UIScreen mainScreen].bounds.size.width - 40, 450);
+    [self.view addSubview:imageView];
+
     //取得识别结果
-    NSArray *ary = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
+    NSArray *ary = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage] options:@{CIDetectorSmile : @YES, CIDetectorEyeBlink : @YES}];
     if (ary.count == 0) {
         NSLog(@"暂未识别出二维码");
     }else{
-        for (CIQRCodeFeature *feature in ary) {
-            NSString *str = feature.messageString;
-            NSLog(@"str = %@", str);
+        for (CIFaceFeature *feature in ary) {
+            NSLog(@"bounds = %@", NSStringFromCGRect(feature.bounds)); //图像坐标中的人脸位置和尺寸
+            NSLog(@"hasLeftEyePosition = %d", feature.hasLeftEyePosition); //检测器是否找到了人脸的左眼
+            NSLog(@"leftEyePosition = %@", NSStringFromCGPoint(feature.leftEyePosition)); //左眼的坐标
+            NSLog(@"hasRightEyePosition = %d", feature.hasRightEyePosition); //检测器是否找到了人脸的右眼
+            NSLog(@"rightEyePosition = %@", NSStringFromCGPoint(feature.rightEyePosition)); //右眼的坐标
+            NSLog(@"hasMouthPosition = %d", feature.hasMouthPosition); //检测器是否找到了人脸的嘴巴
+            NSLog(@"mouthPosition = %@", NSStringFromCGPoint(feature.mouthPosition)); //嘴巴的坐标
+            NSLog(@"hasTrackingID = %d", feature.hasTrackingID); //面部对象是否具有跟踪ID
+            NSLog(@"trackingID = %d ", feature.trackingID); //跟踪ID
+            NSLog(@"hasTrackingFrameCount = %d", feature.hasTrackingFrameCount); //面部对象的布尔值具有跟踪帧计数
+            NSLog(@"trackingFrameCount = %d", feature.trackingFrameCount); //跟踪帧计数
+            NSLog(@"hasFaceAngle = %d", feature.hasFaceAngle); //是否有关于脸部旋转的信息
+            NSLog(@"faceAngle = %.f", feature.faceAngle); //旋转是以度数逆时针测量的，其中零指示在眼睛之间画出的线是相对于图像方向是水平的
+            NSLog(@"hasSmile = %d", feature.hasSmile); //是否有笑脸
+            NSLog(@"leftEyeClosed = %d", feature.leftEyeClosed); //左眼是否闭上
+            NSLog(@"rightEyeClosed = %d", feature.rightEyeClosed); //右眼是否闭上
+            
+            UIView *redView = [self getRedView];
+            redView.frame = [self getConvertedRect:feature type:faceTypeFace image:image];
+            [imageView addSubview:redView];
+            
+            if (feature.hasLeftEyePosition){
+                UIView *leftView = [self getRedView];
+                leftView.frame = [self getConvertedRect:feature type:faceTypeLeftEye image:image];
+                [imageView addSubview:leftView];
+            }
+            if (feature.hasRightEyePosition){
+                UIView *rightView = [self getRedView];
+                rightView.frame = [self getConvertedRect:feature type:faceTypeRightEye image:image];
+                [imageView addSubview:rightView];
+            }
+            if (feature.hasMouthPosition){
+                UIView *mouthView = [self getRedView];
+                mouthView.frame = [self getConvertedRect:feature type:faceTypeMouth image:image];
+                [imageView addSubview:mouthView];
+            }
         }
     }
+}
+
+- (UIView *)getRedView
+{
+    UIView *redView = [[UIView alloc] init];
+    redView.layer.borderColor = [UIColor redColor].CGColor;
+    redView.layer.borderWidth = 2;
+    return redView;
+}
+
+- (CGRect)getConvertedRect:(CIFaceFeature *)faceFeature type:(faceType)faceT image:(UIImage *)img
+{
+    CGRect faceRect = faceFeature.bounds;
+    switch (faceT){
+        case faceTypeLeftEye:
+        {
+            faceRect.origin = faceFeature.leftEyePosition;
+            faceRect.size = CGSizeMake(faceFeature.bounds.size.width * 1/6, faceFeature.bounds.size.height * 1/6);
+            faceRect.origin.x -= faceRect.size.width/2;
+            faceRect.origin.y -= faceRect.size.height/2;
+        }
+            break;
+        case faceTypeRightEye:
+        {
+            faceRect.origin = faceFeature.rightEyePosition;
+            faceRect.size = CGSizeMake(faceFeature.bounds.size.width * 1/6, faceFeature.bounds.size.height * 1/6);
+            faceRect.origin.x -= faceRect.size.width/2;
+            faceRect.origin.y -= faceRect.size.height/2;
+        }
+            break;
+        case faceTypeMouth:
+        {
+            faceRect.origin = faceFeature.mouthPosition;
+            faceRect.size = CGSizeMake(faceFeature.bounds.size.width * 1/3, faceFeature.bounds.size.height * 1/6);
+            faceRect.origin.x -= faceRect.size.width/2;
+            faceRect.origin.y -= faceRect.size.height;
+        }
+            break;
+        default:
+            break;
+    }
+    CGFloat width = [UIScreen mainScreen].bounds.size.width - 40;
+    CGFloat height = 450;
+    CGFloat widthPer = width / img.size.width;
+    CGFloat heightPer = height / img.size.height;
+    
+    faceRect.origin.x = img.size.width - faceRect.origin.x - faceRect.size.width + 40;
+    faceRect.origin.y = img.size.height - faceRect.origin.y - faceRect.size.height;
+    
+    faceRect.origin.x = faceRect.origin.x * widthPer;
+    faceRect.origin.y = faceRect.origin.y * heightPer;
+    faceRect.size.width = faceRect.size.width * widthPer;
+    faceRect.size.height = faceRect.size.height * heightPer;
+    
+    return faceRect;
 }
 
 
