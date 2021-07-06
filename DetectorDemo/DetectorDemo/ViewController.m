@@ -32,13 +32,13 @@ typedef NS_ENUM(NSUInteger, faceType) {
 //    [self analysisQRCode];
     
     //检测文本区域
-//    [self analysisText];
+    [self analysisText];
     
     //检测人脸
 //    [self analysisFace];
     
     //检测条形码
-    [self analysisRectangle];
+//    [self analysisRectangle];
 }
 
 /**
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSUInteger, faceType) {
 {
     UIImage *image = [UIImage imageNamed:@"content"];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-//    imageView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    imageView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     [self.view addSubview:imageView];
     //创建图形上下文
 //    CIContext *context = [CIContext contextWithOptions:nil];
@@ -117,21 +117,15 @@ typedef NS_ENUM(NSUInteger, faceType) {
         NSLog(@"暂未识别出二维码");
     }else{
         NSInteger count = 0;
-        for (CIFeature *feature in ary) {
-            if ([feature isKindOfClass:[CITextFeature class]]) {
-                count++;
-                CITextFeature *textFeature = (CITextFeature *)feature;
-                NSLog(@"x = %.f, y = %.f, width = %.f, height = %.f, count = %ld", textFeature.bounds.origin.x, textFeature.bounds.origin.y, textFeature.bounds.size.width, textFeature.bounds.size.height, (long)count);
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(textFeature.bounds.origin.x, textFeature.bounds.origin.y - textFeature.bounds.size.height , textFeature.bounds.size.width, textFeature.bounds.size.height)];
-                view.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.25];
-                [imageView addSubview:view];
-            }else if ([feature isKindOfClass:[CIQRCodeFeature class]]){
-                CIQRCodeFeature *qrFeature = (CIQRCodeFeature *)feature;
-                NSLog(@"str = %@", qrFeature.messageString);
-            }
+        for (NSInteger i = ary.count - 1; i >= 0; i--) {
+            CIFeature *feature = ary[i];
+            CITextFeature *textFeature = (CITextFeature *)feature;
+            NSLog(@"x = %.f, y = %.f, width = %.f, height = %.f, count = %ld", textFeature.bounds.origin.x, textFeature.bounds.origin.y, textFeature.bounds.size.width, textFeature.bounds.size.height, (long)count);
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(textFeature.bounds.origin.x, textFeature.bounds.origin.y, textFeature.bounds.size.width, textFeature.bounds.size.height)];
+            view.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.25];
+            [self.view addSubview:view];
         }
     }
-
 }
 
 #pragma mark ----- 检测人脸
