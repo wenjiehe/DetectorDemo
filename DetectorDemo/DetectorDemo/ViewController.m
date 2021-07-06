@@ -28,9 +28,17 @@ typedef NS_ENUM(NSUInteger, faceType) {
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    //解析二维码
 //    [self analysisQRCode];
+    
+    //检测文本区域
 //    [self analysisText];
-    [self analysisFace];
+    
+    //检测人脸
+//    [self analysisFace];
+    
+    //检测条形码
+    [self analysisRectangle];
 }
 
 /**
@@ -55,7 +63,7 @@ typedef NS_ENUM(NSUInteger, faceType) {
 
  */
 
-
+#pragma mark ---- 解析二维码
 - (void)analysisQRCode
 {
     //创建图形上下文
@@ -76,6 +84,7 @@ typedef NS_ENUM(NSUInteger, faceType) {
     }
 }
 
+#pragma mark ----- 检测文本区域
 - (void)analysisText
 {
     UIImage *image = [UIImage imageNamed:@"content"];
@@ -125,6 +134,7 @@ typedef NS_ENUM(NSUInteger, faceType) {
 
 }
 
+#pragma mark ----- 检测人脸
 - (void)analysisFace
 {
     //创建图形上下文
@@ -222,12 +232,12 @@ typedef NS_ENUM(NSUInteger, faceType) {
         default:
             break;
     }
-    CGFloat width = [UIScreen mainScreen].bounds.size.width - 40;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width - 20;
     CGFloat height = 450;
     CGFloat widthPer = width / img.size.width;
     CGFloat heightPer = height / img.size.height;
     
-    faceRect.origin.x = img.size.width - faceRect.origin.x - faceRect.size.width + 40;
+    faceRect.origin.x = img.size.width - faceRect.origin.x - faceRect.size.width + 20;
     faceRect.origin.y = img.size.height - faceRect.origin.y - faceRect.size.height;
     
     faceRect.origin.x = faceRect.origin.x * widthPer;
@@ -236,6 +246,49 @@ typedef NS_ENUM(NSUInteger, faceType) {
     faceRect.size.height = faceRect.size.height * heightPer;
     
     return faceRect;
+}
+
+#pragma mark ----- 检测条形码
+- (void)analysisRectangle
+{
+    //创建图形上下文
+    CIContext *context = [CIContext contextWithOptions:nil];
+    NSDictionary *param = [NSDictionary dictionaryWithObject:CIDetectorTypeRectangle forKey:CIDetectorAccuracyHigh];
+    //创建识别器对象
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeRectangle context:context options:param];
+    UIImage *image = [UIImage imageNamed:@"barCode"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = CGRectMake(20, 100, [UIScreen mainScreen].bounds.size.width - 40, 244);
+    [self.view addSubview:imageView];
+
+    //取得识别结果
+    NSArray *ary = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
+    if (ary.count == 0) {
+        NSLog(@"暂未识别出二维码");
+    }else{
+        for (CIRectangleFeature *feature in ary) {
+            NSLog(@"bounds = %@", NSStringFromCGRect(feature.bounds)); //
+            NSLog(@"topLeft = %@", NSStringFromCGPoint(feature.topLeft)); //
+            NSLog(@"topRight = %@", NSStringFromCGPoint(feature.topRight)); //
+            NSLog(@"bottomLeft = %@", NSStringFromCGPoint(feature.bottomLeft)); //
+            NSLog(@"bottomRight = %@", NSStringFromCGPoint(feature.bottomRight)); //
+            
+            UIView *redView1 = [self getRedView];
+            UIView *redView2 = [self getRedView];
+            UIView *redView3 = [self getRedView];
+            UIView *redView4 = [self getRedView];
+            
+            redView1.frame = CGRectMake(feature.topLeft.x, feature.topLeft.y + 88, 10, 10);
+            redView2.frame = CGRectMake(feature.topRight.x, feature.topRight.y + 88, 10, 10);
+            redView3.frame = CGRectMake(feature.bottomLeft.x, feature.bottomLeft.y + 88, 10, 10);
+            redView4.frame = CGRectMake(feature.bottomRight.x, feature.bottomRight.y + 88, 10, 10);
+            
+            [self.view addSubview:redView1];
+            [self.view addSubview:redView2];
+            [self.view addSubview:redView3];
+            [self.view addSubview:redView4];
+        }
+    }
 }
 
 
