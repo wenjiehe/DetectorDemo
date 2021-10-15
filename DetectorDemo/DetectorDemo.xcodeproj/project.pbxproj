@@ -21,6 +21,8 @@
 		3D46ABB5268C378E0035B72A /* DetectorDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D46ABB4268C378E0035B72A /* DetectorDemoUITests.m */; };
 		3D46ABC5268C59F30035B72A /* htmlTian.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D46ABC3268C59F30035B72A /* htmlTian.png */; };
 		3D46ABC6268C59F30035B72A /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D46ABC4268C59F30035B72A /* text.png */; };
+		3D97CB392719CDD600538E80 /* VisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D97CB382719CDD600538E80 /* VisionManager.m */; };
+		3D97CB3C2719CEBF00538E80 /* VisionKitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D97CB3B2719CEBF00538E80 /* VisionKitManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,10 @@
 		3D46ABB6268C378E0035B72A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D46ABC3268C59F30035B72A /* htmlTian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = htmlTian.png; sourceTree = "<group>"; };
 		3D46ABC4268C59F30035B72A /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
+		3D97CB372719CDD600538E80 /* VisionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisionManager.h; sourceTree = "<group>"; };
+		3D97CB382719CDD600538E80 /* VisionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisionManager.m; sourceTree = "<group>"; };
+		3D97CB3A2719CEBF00538E80 /* VisionKitManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisionKitManager.h; sourceTree = "<group>"; };
+		3D97CB3B2719CEBF00538E80 /* VisionKitManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisionKitManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +132,10 @@
 				3D46AB9B268C378D0035B72A /* LaunchScreen.storyboard */,
 				3D46AB9E268C378D0035B72A /* Info.plist */,
 				3D46AB9F268C378D0035B72A /* main.m */,
+				3D97CB372719CDD600538E80 /* VisionManager.h */,
+				3D97CB382719CDD600538E80 /* VisionManager.m */,
+				3D97CB3A2719CEBF00538E80 /* VisionKitManager.h */,
+				3D97CB3B2719CEBF00538E80 /* VisionKitManager.m */,
 			);
 			path = DetectorDemo;
 			sourceTree = "<group>";
@@ -294,7 +304,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D97CB392719CDD600538E80 /* VisionManager.m in Sources */,
 				3D46AB95268C37850035B72A /* ViewController.m in Sources */,
+				3D97CB3C2719CEBF00538E80 /* VisionKitManager.m in Sources */,
 				3D46AB8F268C37850035B72A /* AppDelegate.m in Sources */,
 				3D46ABA0268C378D0035B72A /* main.m in Sources */,
 				3D46AB92268C37850035B72A /* SceneDelegate.m in Sources */,

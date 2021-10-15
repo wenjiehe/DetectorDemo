@@ -7,6 +7,7 @@
 
 #import "ViewController.h"
 #import <CoreImage/CIDetector.h>
+#import "VisionKitManager.h"
 
 typedef NS_ENUM(NSUInteger, faceType) {
     faceTypeLeftEye,
@@ -24,6 +25,7 @@ typedef NS_ENUM(NSUInteger, faceType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -32,13 +34,16 @@ typedef NS_ENUM(NSUInteger, faceType) {
 //    [self analysisQRCode];
     
     //检测文本区域
-    [self analysisText];
+//    [self analysisText];
     
     //检测人脸
 //    [self analysisFace];
     
     //检测条形码
 //    [self analysisRectangle];
+    
+    //扫描文档转化为图片
+    [VisionKitManager cameraScanDocument:self];
 }
 
 /**
