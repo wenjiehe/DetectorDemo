@@ -8,6 +8,7 @@
 #import "ViewController.h"
 #import <CoreImage/CIDetector.h>
 #import "VisionKitManager.h"
+#import "VisionManager.h"
 
 typedef NS_ENUM(NSUInteger, faceType) {
     faceTypeLeftEye,
@@ -28,6 +29,11 @@ typedef NS_ENUM(NSUInteger, faceType) {
     
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSLog(@"进来了");
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     //解析二维码
@@ -43,7 +49,10 @@ typedef NS_ENUM(NSUInteger, faceType) {
 //    [self analysisRectangle];
     
     //扫描文档转化为图片
-    [VisionKitManager cameraScanDocument:self];
+//    [VisionKitManager cameraScanDocument:self];
+    
+    //识别图片中的文字
+    [VisionManager imageDetectionManager:nil];
 }
 
 /**
