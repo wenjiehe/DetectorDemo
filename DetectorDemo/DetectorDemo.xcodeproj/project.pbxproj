@@ -22,7 +22,6 @@
 		3D46ABC5268C59F30035B72A /* htmlTian.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D46ABC3268C59F30035B72A /* htmlTian.png */; };
 		3D46ABC6268C59F30035B72A /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D46ABC4268C59F30035B72A /* text.png */; };
 		3D97CB392719CDD600538E80 /* VisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D97CB382719CDD600538E80 /* VisionManager.m */; };
-		3D97CB3C2719CEBF00538E80 /* VisionKitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D97CB3B2719CEBF00538E80 /* VisionKitManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,8 +67,6 @@
 		3D46ABC4268C59F30035B72A /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		3D97CB372719CDD600538E80 /* VisionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisionManager.h; sourceTree = "<group>"; };
 		3D97CB382719CDD600538E80 /* VisionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisionManager.m; sourceTree = "<group>"; };
-		3D97CB3A2719CEBF00538E80 /* VisionKitManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisionKitManager.h; sourceTree = "<group>"; };
-		3D97CB3B2719CEBF00538E80 /* VisionKitManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisionKitManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,8 +131,6 @@
 				3D46AB9F268C378D0035B72A /* main.m */,
 				3D97CB372719CDD600538E80 /* VisionManager.h */,
 				3D97CB382719CDD600538E80 /* VisionManager.m */,
-				3D97CB3A2719CEBF00538E80 /* VisionKitManager.h */,
-				3D97CB3B2719CEBF00538E80 /* VisionKitManager.m */,
 			);
 			path = DetectorDemo;
 			sourceTree = "<group>";
@@ -306,7 +301,6 @@
 			files = (
 				3D97CB392719CDD600538E80 /* VisionManager.m in Sources */,
 				3D46AB95268C37850035B72A /* ViewController.m in Sources */,
-				3D97CB3C2719CEBF00538E80 /* VisionKitManager.m in Sources */,
 				3D46AB8F268C37850035B72A /* AppDelegate.m in Sources */,
 				3D46ABA0268C378D0035B72A /* main.m in Sources */,
 				3D46AB92268C37850035B72A /* SceneDelegate.m in Sources */,
@@ -481,14 +475,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 354GB74WZE;
 				INFOPLIST_FILE = DetectorDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.obm-ios.DetectorDemo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jjccb.mobilebank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NewMobileBankDev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -498,14 +496,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 354GB74WZE;
 				INFOPLIST_FILE = DetectorDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.obm-ios.DetectorDemo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jjccb.mobilebank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NewMobileBankDev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

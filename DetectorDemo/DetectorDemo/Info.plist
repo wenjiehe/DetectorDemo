@@ -24,6 +24,8 @@
 	<string>扫描文档功能需要使用您的相机</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>扫描文档功能需要使用您的相机</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>扫描文档功能需要使用您的相机</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
