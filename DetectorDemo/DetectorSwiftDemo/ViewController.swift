@@ -57,7 +57,7 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate {
         }
         if imageMtbAry.count > 0 {
             VisionManager .imageDetectionManager(imgAry: imageMtbAry)
-            controller .dismiss(animated: true) { 
+            controller.dismiss(animated: true) { 
                 
             }
         }
